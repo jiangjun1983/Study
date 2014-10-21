@@ -15,6 +15,7 @@ AVLTree<T>::AVLTree()
 template<typename T>
 AVLTree<T>::~AVLTree()
 {
+    if (!m_root) return;
     queue<Node*> queue;
     queue.push(m_root);
     while (queue.size() > 0)
@@ -186,6 +187,8 @@ bool AVLTree<T>::remove(const Node* node)
         {
             // node is root
             m_root = m_root->left;
+            if (m_root)
+                m_root->parent = NULL;
         }
         delete node;
     }
@@ -233,6 +236,7 @@ bool AVLTree<T>::remove(const Node* node)
 
         delete node;
     }
+    return true;
 }
 
 template<typename T>
@@ -300,6 +304,7 @@ void AVLTree<T>::fixCount(Node* p)
 template<typename T>
 void AVLTree<T>::breadthFirstPrint()
 {
+    if (!m_root) return;
     std::queue<Node*> q;
     q.push(m_root);
     while (q.size() > 0)
